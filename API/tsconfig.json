@@ -14,7 +14,14 @@
     "isolatedModules": true, // Required for using ESM modules
     "baseUrl": ".", // Allow absolute imports relative to project root
     "paths": {
-      "*": ["node_modules/*"]
-    }
-  }
+      "@src/*": ["src/*"], // Alias @src to src folder
+      "@routes/*": ["src/routes/*"],
+      "@controllers/*": ["src/controllers/*"],
+      "@middlewares/*": ["src/middlewares/*"],
+      "@utils/*": ["src/utils/*"]
+    },
+    "sourceMap": true
+  },
+  "include": ["src/**/*"], // Specify only files in src should be compiled
+  "exclude": ["node_modules", "dist"] // Exclude node_modules and dist (output folder)
 }
