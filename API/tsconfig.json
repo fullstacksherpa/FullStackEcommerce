@@ -12,12 +12,14 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": false, // Allow emitting output
     "isolatedModules": true, // Required for using ESM modules
+    "types": ["node"],
     "baseUrl": ".", // Allow absolute imports relative to project root
     "paths": {
       "@src/*": ["src/*"], // Alias @src to src folder
       "@routes/*": ["src/routes/*"],
       "@controllers/*": ["src/controllers/*"],
       "@middlewares/*": ["src/middlewares/*"],
+      "@db/*": ["src/db/*"],
       "@utils/*": ["src/utils/*"]
     },
     "sourceMap": true
