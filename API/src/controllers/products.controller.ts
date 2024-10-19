@@ -3,6 +3,7 @@ import { db } from "@db/index";
 import { productsTable } from "@src/db/productsSchema";
 import { asyncHandler } from "@src/utils/asyncHandler";
 import { eq } from "drizzle-orm";
+import _ from "lodash";
 
 const listProducts = asyncHandler(async (req: Request, res: Response) => {
   const products = await db.select().from(productsTable);
@@ -34,7 +35,7 @@ const createProduct = asyncHandler(async (req: Request, res: Response) => {
     });
   }
 
-  const [product] = await db.insert(productsTable).values(req.body).returning();
+  const [product] = await db.insert(productsTable).values(req.cleanBody).returning();
 
   res.status(201).json({ message: "Product created successfully", product });
 });
@@ -42,7 +43,7 @@ const createProduct = asyncHandler(async (req: Request, res: Response) => {
 const updateProduct = asyncHandler(async (req: Request, res: Response) => {
   const id = Number(req.params.id);
   console.log(id);
-  const updatedFields = req.body;
+  const updatedFields = req.cleanBody;
   if (!updateProduct) {
     res.status(404).json({ message: `Please provide update product fields correctly` });
   }
