@@ -15,6 +15,13 @@
       "when": 1729313232613,
       "tag": "0001_sticky_plazm",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1729396502383,
+      "tag": "0002_flawless_bloodstorm",
+      "breakpoints": true
     }
   ]
 }

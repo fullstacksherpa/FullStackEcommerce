@@ -1,6 +1,7 @@
 import express from "express";
 import productsRoutes from "@routes/products.routes.js";
 import authRoutes from "@src/routes/auth.routes.js";
+import ordersRoutes from "@src/routes/orders.routes.js";
 import { errorHandler } from "@middlewares/errorHandlerMiddleware.js";
 import serverless from "serverless-http";
 
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 
 app.use("/products", productsRoutes);
 app.use("/auth", authRoutes);
+app.use("/orders", ordersRoutes);
 
 if (process.env.NODE_ENV === "dev") {
   app.listen(PORT, () => {
