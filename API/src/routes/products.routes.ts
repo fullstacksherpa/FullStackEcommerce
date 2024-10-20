@@ -7,7 +7,6 @@ import {
   deleteProduct,
 } from "@controllers/products.controller";
 import { validateData } from "@src/middlewares/validationMiddleware";
-import { z } from "zod";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { productsTable } from "@src/db/productsSchema";
 

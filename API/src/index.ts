@@ -1,5 +1,6 @@
 import express from "express";
 import productsRoutes from "@routes/products.routes";
+import authRoutes from "@src/routes/auth.routes";
 import { errorHandler } from "@middlewares/errorHandlerMiddleware";
 
 const app = express();
@@ -16,6 +17,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/products", productsRoutes);
+app.use("/auth", authRoutes);
 
 app.listen(PORT, () => {
   console.log(`Your server is running on port, http://localhost:${PORT} `);
