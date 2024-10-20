@@ -9,6 +9,7 @@ import {
 import { validateData } from "@src/middlewares/validationMiddleware";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { productsTable } from "@src/db/productsSchema";
+import { verifySeller, verifyToken } from "@src/middlewares/authMiddleware";
 
 export const createProductSchema = createInsertSchema(productsTable).omit({ id: true });
 
@@ -18,8 +19,8 @@ const router = Router();
 
 router.get("/", listProducts);
 router.get("/:id", getProductsById);
-router.post("/", validateData(createProductSchema), createProduct);
-router.put("/:id", validateData(updateProductSchema), updateProduct);
-router.delete("/:id", deleteProduct);
+router.post("/", verifyToken, verifySeller, validateData(createProductSchema), createProduct);
+router.put("/:id", verifyToken, verifySeller, validateData(updateProductSchema), updateProduct);
+router.delete("/:id", verifyToken, verifySeller, deleteProduct);
 
 export default router;

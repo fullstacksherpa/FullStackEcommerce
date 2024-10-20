@@ -23,12 +23,17 @@ router.post("/login", validateData(loginSchema), async (req, res) => {
   try {
     const { email, password } = req.cleanBody;
     const [user] = await db.select().from(usersTable).where(eq(usersTable.email, email));
+
     if (!user) {
       res.status(401).json({ error: "Authentication failed" });
       return;
     }
-    const hashedPassword = await bcrypt.compare(password, user.password);
-    if (hashedPassword !== user.password) {
+
+    // Compare the plain password with the hashed password from the database
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    // If the password is invalid, return an error
+    if (!isPasswordValid) {
       res.status(401).json({ error: "Authentication failed" });
       return;
     }
