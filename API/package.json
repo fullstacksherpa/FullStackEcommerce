@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "node --import=tsx --env-file=.env --watch src/index.ts",
-    "build": "tsc",
+    "dev:compiled": "node  --env-file=.env  dist/index.js",
+    "build": "tsc && tsc-alias",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio"
@@ -32,6 +33,7 @@
     "@types/node": "^22.7.5",
     "@types/pg": "^8.11.10",
     "drizzle-kit": "^0.26.1",
+    "tsc-alias": "^1.8.10",
     "tsx": "^4.19.1",
     "typescript": "^5.6.3"
   }

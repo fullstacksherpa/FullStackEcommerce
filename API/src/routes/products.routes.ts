@@ -5,11 +5,11 @@ import {
   createProduct,
   updateProduct,
   deleteProduct,
-} from "@controllers/products.controller";
-import { validateData } from "@src/middlewares/validationMiddleware";
+} from "@controllers/products.controller.js";
+import { validateData } from "@src/middlewares/validationMiddleware.js";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
-import { productsTable } from "@src/db/productsSchema";
-import { verifySeller, verifyToken } from "@src/middlewares/authMiddleware";
+import { productsTable } from "@src/db/productsSchema.js";
+import { verifySeller, verifyToken } from "@src/middlewares/authMiddleware.js";
 
 export const createProductSchema = createInsertSchema(productsTable).omit({ id: true });
 

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { db } from "@db/index";
-import { productsTable } from "@src/db/productsSchema";
-import { asyncHandler } from "@src/utils/asyncHandler";
+import { db } from "@db/index.js";
+import { productsTable } from "@src/db/productsSchema.js";
+import { asyncHandler } from "@src/utils/asyncHandler.js";
 import { eq } from "drizzle-orm";
 import _ from "lodash";
 

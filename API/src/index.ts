@@ -1,7 +1,7 @@
 import express from "express";
-import productsRoutes from "@routes/products.routes";
-import authRoutes from "@src/routes/auth.routes";
-import { errorHandler } from "@middlewares/errorHandlerMiddleware";
+import productsRoutes from "@routes/products.routes.js";
+import authRoutes from "@src/routes/auth.routes.js";
+import { errorHandler } from "@middlewares/errorHandlerMiddleware.js";
 
 const app = express();
 const PORT = 3000;
