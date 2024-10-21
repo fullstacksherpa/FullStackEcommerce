@@ -10,6 +10,7 @@ export async function createOrder(req: Request, res: Response) {
     if (!userId) {
       res.status(400).json({ message: "Invalid order data" });
     }
+    // @ts-ignore
     const [newOrder] = await db.insert(ordersTable).values({ userId: userId }).returning();
 
     const orderItems = items.map((item: any) => ({
