@@ -8,43 +8,54 @@ import jwt from "jsonwebtoken";
 
 const router = Router();
 
+const generateUserToken = (user: any) => {
+  return jwt.sign({ userId: user.id, role: user.role }, "your-secret", {
+    expiresIn: "30d",
+  });
+};
+
 router.post("/register", validateData(createUserSchema), async (req, res) => {
   try {
     const data = req.cleanBody;
     data.password = await bcrypt.hash(data.password, 10);
+
     const [user] = await db.insert(usersTable).values(data).returning();
-    res.status(200).json({ user });
-  } catch (error) {
-    res.status(500).json("Something went wrong while registering");
+
+    // @ts-ignore
+    delete user.password;
+    const token = generateUserToken(user);
+
+    res.status(201).json({ user, token });
+  } catch (e) {
+    console.log(e);
+    res.status(500).send("Something went wrong");
   }
 });
 
 router.post("/login", validateData(loginSchema), async (req, res) => {
   try {
     const { email, password } = req.cleanBody;
-    const [user] = await db.select().from(usersTable).where(eq(usersTable.email, email));
 
+    const [user] = await db.select().from(usersTable).where(eq(usersTable.email, email));
     if (!user) {
       res.status(401).json({ error: "Authentication failed" });
       return;
     }
 
-    // Compare the plain password with the hashed password from the database
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-
-    // If the password is invalid, return an error
-    if (!isPasswordValid) {
+    const matched = await bcrypt.compare(password, user.password);
+    if (!matched) {
       res.status(401).json({ error: "Authentication failed" });
       return;
     }
 
-    //create a jwt token and send to user
-
-    const token = jwt.sign({ userId: user.id, role: user.role }, "your-secret-top", {
-      expiresIn: "30d",
-    });
-    res.status(200).json(token);
-  } catch (error) {}
+    // create a jwt token
+    const token = generateUserToken(user);
+    // @ts-ignore
+    delete user.password;
+    res.status(200).json({ token, user });
+  } catch (e) {
+    res.status(500).send("Something went wrong");
+  }
 });
 
 export default router;
